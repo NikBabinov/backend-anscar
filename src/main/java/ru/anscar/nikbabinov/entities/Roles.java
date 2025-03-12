@@ -8,18 +8,18 @@ import lombok.*;
 import ru.anscar.nikbabinov.constants.RoleValue;
 
 @Entity
-@Data
+@Getter @Setter
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Builder
-public class Role {
+public class Roles {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String authority;
+    private String role;
 
-    public Role(RoleValue roleValue) {
-        this.authority = roleValue.getValue();
+    public Roles(RoleValue roleValue) {
+        this.role = roleValue.getValue();
     }
 }

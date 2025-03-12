@@ -3,32 +3,32 @@ package ru.anscar.nikbabinov.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.anscar.nikbabinov.entities.User;
+import ru.anscar.nikbabinov.entities.Users;
 
 import java.util.Collection;
 import java.util.Collections;
 
 public class UserSecurity implements UserDetails {
 
-    private final User user;
+    private final Users users;
 
-    public UserSecurity(final User user) {
-        this.user = user;
+    public UserSecurity(final Users users) {
+        this.users = users;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getAuthority()));
+        return Collections.singletonList(new SimpleGrantedAuthority(users.getRoles().getRole()));
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return users.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return users.getEmail();
     }
 
     @Override

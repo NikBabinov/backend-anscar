@@ -23,7 +23,7 @@ public class UserManagerConfig {
             try {
                 return new UserSecurity(authService.getUserByEmail(email));
             } catch (RuntimeException e) {
-                throw new UsernameNotFoundException("User not found: " + email);
+                throw new UsernameNotFoundException("Users not found: " + email);
             }
         };
     }

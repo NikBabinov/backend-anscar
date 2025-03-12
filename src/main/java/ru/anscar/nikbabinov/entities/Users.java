@@ -8,11 +8,11 @@ import ru.anscar.nikbabinov.constants.RoleValue;
 import java.util.Date;
 
 @Entity
-@Data
+@Getter @Setter
 @Builder
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +26,14 @@ public class User {
     private Date userCreateDate;
     private Date userUpdateDate;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "authority_id")
-    private Role role;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Roles roles;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private UsersStatistica usersStatistica;
 
     @Builder(builderMethodName = "baseBuilder")
-    public User(String name, String email, String password) {
+    public Users(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -41,17 +43,16 @@ public class User {
     protected void onCreate() {
         this.userCreateDate = new Date();
         this.userUpdateDate = new Date();
-        if (role == null) {
-            role = new Role(RoleValue.READ);
+        if (roles == null) {
+            roles = new Roles(RoleValue.READ);
+        }
+        if (usersStatistica == null) {
+            usersStatistica = new UsersStatistica();
         }
     }
 
     @PreUpdate
     protected void onUpdate() {
         this.userUpdateDate = new Date();
-    }
-
-    public boolean hasAuthority(String authorityValue) {
-        return role != null && role.getAuthority().equals(authorityValue);
     }
 }
