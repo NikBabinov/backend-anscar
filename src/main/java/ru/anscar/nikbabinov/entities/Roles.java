@@ -9,7 +9,7 @@ import ru.anscar.nikbabinov.constants.RoleValue;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Roles {

@@ -1,4 +1,4 @@
-package ru.anscar.nikbabinov.services.integration_tests;
+package ru.anscar.nikbabinov.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import ru.anscar.nikbabinov.config.JwtTokenProviderTestConfig;
 import ru.anscar.nikbabinov.config.TestSecurityConfig;
-import ru.anscar.nikbabinov.controllers.UsersStatisticaController;
 import ru.anscar.nikbabinov.dto.UserStatisticaDTO;
 import ru.anscar.nikbabinov.entities.Users;
 import ru.anscar.nikbabinov.mappers.UserStatisticaMapper;
@@ -29,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = UsersStatisticaController.class)
 @ActiveProfiles("test")
 @WithMockUser
-public class UsersStatisticaRestTest {
+public class UsersStatisticaControllerRestTest {
 
     @Autowired
     private MockMvc mockMvc;

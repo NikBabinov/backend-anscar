@@ -1,16 +1,14 @@
-package ru.anscar.nikbabinov.services.unit_test;
+package ru.anscar.nikbabinov.services;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.anscar.nikbabinov.dto.UserDTO;
 import ru.anscar.nikbabinov.entities.Users;
 import ru.anscar.nikbabinov.repositories.UsersRepositories;
-import ru.anscar.nikbabinov.services.RegisterService;
 
 import java.util.Date;
 
@@ -18,17 +16,14 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
-public class RegisterServiceWithManualConfigMockitoTest {
+@ExtendWith(MockitoExtension.class)
+public class RegisterServiceConfigMockitoTest {
 
-    private final UsersRepositories usersRepositories = Mockito.mock(UsersRepositories.class);
+    @Mock
+    private UsersRepositories usersRepositories;
+
+    @InjectMocks
     private RegisterService registerService;
-
-    @BeforeEach
-    public void setUp() {
-        registerService = new RegisterService(usersRepositories);
-    }
 
     @Test
     void givenUser_whenRegistration_thenRegistrationDate() {
@@ -60,4 +55,3 @@ public class RegisterServiceWithManualConfigMockitoTest {
                 .build();
     }
 }
-

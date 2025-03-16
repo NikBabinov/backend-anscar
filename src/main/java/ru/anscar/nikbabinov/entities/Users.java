@@ -44,7 +44,7 @@ public class Users {
         this.userCreateDate = new Date();
         this.userUpdateDate = new Date();
         if (roles == null) {
-            roles = new Roles(RoleValue.READ);
+            roles = new Roles(RoleValue.ROLE_USER);
         }
         if (usersStatistica == null) {
             usersStatistica = new UsersStatistica();

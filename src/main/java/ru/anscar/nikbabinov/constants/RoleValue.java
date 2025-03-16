@@ -2,9 +2,8 @@ package ru.anscar.nikbabinov.constants;
 
 public enum RoleValue {
 
-    READ("read"),
-    WRITE("write"),
-    ADMIN("admin");
+    ROLE_USER("ROLE_USER"),
+    ROLE_ADMIN("ROLE_ADMIN");
 
     private final String value;
 

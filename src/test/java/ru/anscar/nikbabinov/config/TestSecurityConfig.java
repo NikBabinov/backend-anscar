@@ -12,6 +12,7 @@ public class TestSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
+                .requestMatchers("/user/adminPanel").hasAuthority("ROLE_ADMIN")
                 .anyRequest().permitAll();
 
         return http.build();
