@@ -28,16 +28,17 @@ public class AuthService implements UserDetailsService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public ResponseEntity<?> loginUser(UserDTO userDTO) {
+    public Users loginUser(UserDTO userDTO) {
         Users users = usersRepositories.findUsersByEmail(userDTO.getEmail());
         if (users != null && passwordEncoder.matches(userDTO.getPassword(), users.getPassword())) {
-            logger.info("login users: {}", users);
-            return ResponseEntity.ok(users);
+            logger.info("User logged in successfully: {}", userDTO.getEmail());
+            return users;
         } else {
-            logger.info("login users with email: {}, password{} failed", userDTO.getEmail(), userDTO.getPassword());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+            logger.warn("Failed login attempt for email: {}", userDTO.getEmail());
+            return null;
         }
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import ru.anscar.nikbabinov.constants.RoleValue;
+import ru.anscar.nikbabinov.util.CookiesUtil;
 
 import java.util.Base64;
 import java.util.Date;
@@ -21,13 +22,15 @@ import javax.crypto.SecretKey;
 public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
+    private final CookiesUtil cookiesUtil;
     private SecretKey secretKey;
 
     @Value("${jwt.secret}")
     private String secret;
 
-    public JwtTokenProvider(UserDetailsService userDetailsService) {
+    public JwtTokenProvider(UserDetailsService userDetailsService, CookiesUtil cookiesUtil) {
         this.userDetailsService = userDetailsService;
+        this.cookiesUtil = cookiesUtil;
     }
 
     @PostConstruct
@@ -68,8 +71,9 @@ public class JwtTokenProvider {
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
-        return null;
+        return cookiesUtil.getTokenFromCookies(req);
     }
+
 
     public boolean validateToken(String token) {
         try {

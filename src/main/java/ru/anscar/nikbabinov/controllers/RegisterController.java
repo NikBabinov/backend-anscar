@@ -1,8 +1,11 @@
 package ru.anscar.nikbabinov.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.anscar.nikbabinov.dto.UserDTO;
+import ru.anscar.nikbabinov.entities.Users;
 import ru.anscar.nikbabinov.services.RegisterService;
 import ru.anscar.nikbabinov.util.ResponseEntityUtil;
 
@@ -23,10 +26,13 @@ public class RegisterController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody UserDTO userDTO, HttpServletResponse response) {
         try {
-            ResponseEntity<?> responseEntity = registerService.registerUser(userDTO);
-            return responseEntityUtil.getMapResponseEntity(responseEntity);
+            Users saveUsers = registerService.registerUser(userDTO);
+            if (saveUsers != null) {
+                return responseEntityUtil.getMapResponseEntity(saveUsers, response);
+            }
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } catch (Exception e) {
             e.printStackTrace();
             Map<String, Object> errorResponse = new HashMap<>();

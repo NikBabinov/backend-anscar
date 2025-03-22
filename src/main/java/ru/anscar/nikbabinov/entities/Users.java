@@ -33,10 +33,9 @@ public class Users {
     private UsersStatistica usersStatistica;
 
     @Builder(builderMethodName = "baseBuilder")
-    public Users(String name, String email, String password) {
+    public Users(String name, String email) {
         this.name = name;
         this.email = email;
-        this.password = password;
     }
 
     @PrePersist

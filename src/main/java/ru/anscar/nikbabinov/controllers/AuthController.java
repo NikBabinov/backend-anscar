@@ -1,8 +1,10 @@
 package ru.anscar.nikbabinov.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.anscar.nikbabinov.dto.UserDTO;
+import ru.anscar.nikbabinov.entities.Users;
 import ru.anscar.nikbabinov.services.AuthService;
 import ru.anscar.nikbabinov.util.ResponseEntityUtil;
 
@@ -23,17 +25,17 @@ public class AuthController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody UserDTO userDTO, HttpServletResponse response) {
         try {
-            ResponseEntity<?> responseEntity = authService.loginUser(userDTO);
-            return responseEntityUtil.getMapResponseEntity(responseEntity);
+            Users autUser = authService.loginUser(userDTO);
+            return responseEntityUtil.getMapResponseEntity(autUser, response);
         } catch (Exception e) {
             e.printStackTrace();
-
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(errorResponse);
         }
     }
+
 
 }

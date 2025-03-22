@@ -1,12 +1,14 @@
 package ru.anscar.nikbabinov.util;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import ru.anscar.nikbabinov.dto.UserDTO;
 import ru.anscar.nikbabinov.entities.Users;
 import ru.anscar.nikbabinov.security.JwtTokenProvider;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,23 +16,30 @@ import java.util.Map;
 public class ResponseEntityUtil {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private CookiesUtil cookiesUtil;
 
-    public ResponseEntityUtil(JwtTokenProvider jwtTokenProvider) {
+    public ResponseEntityUtil(JwtTokenProvider jwtTokenProvider,CookiesUtil cookiesUtil) {
         this.jwtTokenProvider = jwtTokenProvider;
+        this.cookiesUtil = cookiesUtil;
     }
 
-    public ResponseEntity<Map<String, Object>> getMapResponseEntity(ResponseEntity<?> responseEntity) {
-        if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            Users newUsers = (Users) responseEntity.getBody();
-            String role = newUsers.getRoles().getRole();
-            String token = jwtTokenProvider.createToken(newUsers.getEmail(), role);
+    public ResponseEntity<Map<String, Object>> getMapResponseEntity(Users users, HttpServletResponse httpResponse) {
+        if (users != null) {
+            String role = users.getRoles().getRole();
+            String token = jwtTokenProvider.createToken(users.getEmail(), role);
+
+            // set token in cookies
+            Cookie cookie = cookiesUtil.setTokenInCookies(token);
+            httpResponse.addCookie(cookie);
+
+            // body response
             Map<String, Object> response = new HashMap<>();
-            UserDTO responseUser = new UserDTO(newUsers.getName(), newUsers.getEmail(), null, newUsers.getRoles().getRole());
+            UserDTO responseUser = new UserDTO(users.getId(), users.getName(), users.getEmail(), null, role);
             response.put("user", responseUser);
-            response.put("token", token);
+            response.put("message", "Login successful");
             return ResponseEntity.ok(response);
         }
-        return ResponseEntity.status(responseEntity.getStatusCode())
-                .body(Map.of("error", responseEntity.getBody()));
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }

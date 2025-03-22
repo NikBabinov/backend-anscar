@@ -22,6 +22,8 @@ public class UsersStatisticaController {
 
     @GetMapping("/statistica")
     public ResponseEntity<UserStatisticaDTO> statistica(@RequestParam String email) {
+        System.out.println("===============------======-------");
+        System.out.println("get param");
         if (email == null || email.isBlank()) {
             return ResponseEntity.badRequest().build();
         }

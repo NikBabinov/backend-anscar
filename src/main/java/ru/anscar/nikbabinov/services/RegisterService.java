@@ -26,19 +26,17 @@ public class RegisterService {
 
 
     @Transactional
-    public ResponseEntity<?> registerUser(UserDTO userDTO) {
+    public Users registerUser(UserDTO userDTO) {
         if (!isUserEmailUnique(userDTO.getEmail())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body("Email is already in use!");
+            return null;
         }
-        System.out.println("Email: " + userDTO.getEmail());
         Users users = new Users();
         users.setName(userDTO.getName());
         users.setEmail(userDTO.getEmail());
         users.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        usersRepositories.save(users);
+        Users savedUser = usersRepositories.save(users);
         logger.info("register users: {}", users);
-        return ResponseEntity.status(HttpStatus.CREATED).body(users);
+        return savedUser;
     }
 
     public boolean isUserEmailUnique(String userEmail) {
