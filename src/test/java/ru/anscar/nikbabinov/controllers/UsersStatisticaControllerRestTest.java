@@ -18,6 +18,8 @@ import ru.anscar.nikbabinov.entities.Users;
 import ru.anscar.nikbabinov.mappers.UserStatisticaMapper;
 import ru.anscar.nikbabinov.services.UserService;
 
+import java.util.Date;
+
 import static org.assertj.core.api.Assertions.*;
 
 import static org.mockito.Mockito.*;
@@ -87,13 +89,15 @@ public class UsersStatisticaControllerRestTest {
     @Test
     void statistica_whenValidInput_thenReturnResponseEntityUserStatisticaDTO() throws Exception {
         Users user = new Users("nik", "test@mail.ru", "password");
-        UserStatisticaDTO userStatisticaDTO = new UserStatisticaDTO(
-                user.getName(),
-                user.getEmail(),
-                1,
-                1,
-                1
-        );
+        UserStatisticaDTO userStatisticaDTO = new UserStatisticaDTO(1L
+                , "test"
+                , "test@mail.ru"
+                , 1
+                , 1
+                , 1
+                , new Date()
+                , new Date()
+                , "Role");
 
         when(userService.getUserByEmail(user.getEmail())).thenReturn(user);
         when(userStatisticaMapper.usersToUserDto(user)).thenReturn(userStatisticaDTO);

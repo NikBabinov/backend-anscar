@@ -13,10 +13,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import ru.anscar.nikbabinov.config.JwtTokenProviderTestConfig;
 import ru.anscar.nikbabinov.config.TestSecurityConfig;
-import ru.anscar.nikbabinov.entities.Users;
+import ru.anscar.nikbabinov.dto.UserStatisticaDTO;
 import ru.anscar.nikbabinov.services.AdminService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -42,8 +43,11 @@ public class AdminPanelControllerRestTest {
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
     void getAllUsers_whenAccessAdmin_thenReturn200() throws Exception {
-        List<Users> usersList = new ArrayList<>();
-        usersList.add(new Users("admin", "admin@mail.ru", "admin"));
+        List<UserStatisticaDTO> usersList = new ArrayList<>();
+
+        UserStatisticaDTO userStatisticaDTO = getUserStatisticaDTO();
+
+        usersList.add(userStatisticaDTO);
         when(adminService.getAllUsersDto()).thenReturn(usersList);
         mockMvc.perform(get("/user/adminPanel")).andExpect(status().isOk());
     }
@@ -51,8 +55,11 @@ public class AdminPanelControllerRestTest {
     @Test
     @WithMockUser(authorities = "ROLE_USER")
     void getAllUsers_whenAccessUser_thenReturn403() throws Exception {
-        List<Users> usersList = new ArrayList<>();
-        usersList.add(new Users("user", "user@mail.ru", "user"));
+        List<UserStatisticaDTO> usersList = new ArrayList<>();
+
+        UserStatisticaDTO userStatisticaDTO = getUserStatisticaDTO();
+
+        usersList.add(userStatisticaDTO);
         when(adminService.getAllUsersDto()).thenReturn(usersList);
         mockMvc.perform(get("/user/adminPanel")).andExpect(status().isForbidden());
     }
@@ -60,8 +67,11 @@ public class AdminPanelControllerRestTest {
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
     void getUser_whenAccessAdmin_thenReturnListUsers() throws Exception {
-        List<Users> usersList = new ArrayList<>();
-        usersList.add(new Users("admin", "admin@mail.ru", "admin"));
+        List<UserStatisticaDTO> usersList = new ArrayList<>();
+
+        UserStatisticaDTO userStatisticaDTO = getUserStatisticaDTO();
+
+        usersList.add(userStatisticaDTO);
 
         when(adminService.getAllUsersDto()).thenReturn(usersList);
 
@@ -69,5 +79,17 @@ public class AdminPanelControllerRestTest {
 
         MvcResult mvcResult = mockMvc.perform(get("/user/adminPanel")).andReturn();
         assertThat(mvcResult.getResponse().getContentAsString()).isEqualToIgnoringWhitespace(userListAsString);
+    }
+
+    private UserStatisticaDTO getUserStatisticaDTO() {
+        return new UserStatisticaDTO(1L
+                , "test"
+                , "test@mail.ru"
+                , 1
+                , 1
+                , 1
+                , new Date()
+                , new Date()
+                , "Role");
     }
 }

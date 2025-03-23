@@ -8,7 +8,8 @@ import ru.anscar.nikbabinov.constants.RoleValue;
 import java.util.Date;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,9 +35,10 @@ public class Users {
     private UsersStatistica usersStatistica;
 
     @Builder(builderMethodName = "baseBuilder")
-    public Users(String name, String email) {
+    public Users(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
     }
 
     @PrePersist

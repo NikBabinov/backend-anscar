@@ -5,7 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
 import ru.anscar.nikbabinov.dto.UserDTO;
 import ru.anscar.nikbabinov.entities.Users;
 import ru.anscar.nikbabinov.repositories.UsersRepositories;
@@ -40,10 +39,9 @@ public class RegisterServiceConfigMockitoTest {
         });
 
 
-        ResponseEntity<?> responseEntity = registerService.registerUser(userDTO);
-        Users usersRequest = (Users) responseEntity.getBody();
+        Users saveUser = registerService.registerUser(userDTO);
 
-        assertThat(usersRequest.getUserCreateDate()).isNotNull();
+        assertThat(saveUser.getUserCreateDate()).isNotNull();
     }
 
 
