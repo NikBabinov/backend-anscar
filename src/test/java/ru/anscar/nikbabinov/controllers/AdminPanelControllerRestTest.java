@@ -43,39 +43,39 @@ public class AdminPanelControllerRestTest {
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
     void getAllUsers_whenAccessAdmin_thenReturn200() throws Exception {
-        List<UserStatisticaDTO> usersList = new ArrayList<>();
+        List<UserStatisticaDTO> usersListStatisticaDto = new ArrayList<>();
 
         UserStatisticaDTO userStatisticaDTO = getUserStatisticaDTO();
 
-        usersList.add(userStatisticaDTO);
-        when(adminService.getAllUsersDto()).thenReturn(usersList);
+        usersListStatisticaDto.add(userStatisticaDTO);
+        when(adminService.getAllUsersDto()).thenReturn(usersListStatisticaDto);
         mockMvc.perform(get("/user/adminPanel")).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = "ROLE_USER")
     void getAllUsers_whenAccessUser_thenReturn403() throws Exception {
-        List<UserStatisticaDTO> usersList = new ArrayList<>();
+        List<UserStatisticaDTO> usersListStatisticaDto = new ArrayList<>();
 
         UserStatisticaDTO userStatisticaDTO = getUserStatisticaDTO();
 
-        usersList.add(userStatisticaDTO);
-        when(adminService.getAllUsersDto()).thenReturn(usersList);
+        usersListStatisticaDto.add(userStatisticaDTO);
+        when(adminService.getAllUsersDto()).thenReturn(usersListStatisticaDto);
         mockMvc.perform(get("/user/adminPanel")).andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
     void getUser_whenAccessAdmin_thenReturnListUsers() throws Exception {
-        List<UserStatisticaDTO> usersList = new ArrayList<>();
+        List<UserStatisticaDTO> usersListStatisticaDto = new ArrayList<>();
 
         UserStatisticaDTO userStatisticaDTO = getUserStatisticaDTO();
 
-        usersList.add(userStatisticaDTO);
+        usersListStatisticaDto.add(userStatisticaDTO);
 
-        when(adminService.getAllUsersDto()).thenReturn(usersList);
+        when(adminService.getAllUsersDto()).thenReturn(usersListStatisticaDto);
 
-        String userListAsString = objectMapper.writeValueAsString(usersList);
+        String userListAsString = objectMapper.writeValueAsString(usersListStatisticaDto);
 
         MvcResult mvcResult = mockMvc.perform(get("/user/adminPanel")).andReturn();
         assertThat(mvcResult.getResponse().getContentAsString()).isEqualToIgnoringWhitespace(userListAsString);
