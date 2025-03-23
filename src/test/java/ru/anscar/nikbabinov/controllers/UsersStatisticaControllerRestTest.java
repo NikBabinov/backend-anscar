@@ -46,7 +46,7 @@ public class UsersStatisticaControllerRestTest {
     void statistica_whenValidEmail_thenReturns200() throws Exception {
         Users user = new Users("nik", "test@mail.ru", "password");
         when(userService.getUserByEmail(user.getEmail())).thenReturn(user);
-        when(userStatisticaMapper.toDto(user)).thenReturn(new UserStatisticaDTO());
+        when(userStatisticaMapper.usersToUserDto(user)).thenReturn(new UserStatisticaDTO());
 
         mockMvc.perform(get("/user/statistica")
                         .param("email", user.getEmail()))
@@ -64,7 +64,7 @@ public class UsersStatisticaControllerRestTest {
     void statistica_whenNotRegisterUserEmail_thenReturns404() throws Exception {
         Users user = new Users("nik", "test@mail.ru", "password");
         when(userService.getUserByEmail(user.getEmail())).thenReturn(user);
-        when(userStatisticaMapper.toDto(user)).thenReturn(new UserStatisticaDTO());
+        when(userStatisticaMapper.usersToUserDto(user)).thenReturn(new UserStatisticaDTO());
 
         mockMvc.perform(get("/user/statistica")
                         .param("email", "notRegisterUser@mail.ru"))
@@ -80,7 +80,7 @@ public class UsersStatisticaControllerRestTest {
                 .param("email", user.getEmail()));
 
         ArgumentCaptor<Users> captor = ArgumentCaptor.forClass(Users.class);
-        verify(userStatisticaMapper, times(1)).toDto(captor.capture());
+        verify(userStatisticaMapper, times(1)).usersToUserDto(captor.capture());
         assertThat(captor.getValue().getName()).isEqualTo("nik");
     }
 
@@ -96,7 +96,7 @@ public class UsersStatisticaControllerRestTest {
         );
 
         when(userService.getUserByEmail(user.getEmail())).thenReturn(user);
-        when(userStatisticaMapper.toDto(user)).thenReturn(userStatisticaDTO);
+        when(userStatisticaMapper.usersToUserDto(user)).thenReturn(userStatisticaDTO);
 
         MvcResult mvcResult = mockMvc.perform(get("/user/statistica")
                         .param("email", user.getEmail()))

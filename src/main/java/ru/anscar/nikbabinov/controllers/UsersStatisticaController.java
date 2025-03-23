@@ -22,8 +22,6 @@ public class UsersStatisticaController {
 
     @GetMapping("/statistica")
     public ResponseEntity<UserStatisticaDTO> statistica(@RequestParam String email) {
-        System.out.println("===============------======-------");
-        System.out.println("get param");
         if (email == null || email.isBlank()) {
             return ResponseEntity.badRequest().build();
         }
@@ -31,7 +29,7 @@ public class UsersStatisticaController {
         if (users == null) {
             return ResponseEntity.notFound().build();
         }
-        UserStatisticaDTO userStatisticaDTO = userStatisticaMapper.toDto(users);
+        UserStatisticaDTO userStatisticaDTO = userStatisticaMapper.usersToUserDto(users);
         return ResponseEntity.ok(userStatisticaDTO);
     }
 }

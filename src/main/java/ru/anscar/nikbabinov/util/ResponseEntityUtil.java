@@ -9,6 +9,7 @@ import ru.anscar.nikbabinov.security.JwtTokenProvider;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,9 +17,9 @@ import java.util.Map;
 public class ResponseEntityUtil {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private CookiesUtil cookiesUtil;
+    private final CookiesUtil cookiesUtil;
 
-    public ResponseEntityUtil(JwtTokenProvider jwtTokenProvider,CookiesUtil cookiesUtil) {
+    public ResponseEntityUtil(JwtTokenProvider jwtTokenProvider, CookiesUtil cookiesUtil) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.cookiesUtil = cookiesUtil;
     }
@@ -28,13 +29,18 @@ public class ResponseEntityUtil {
             String role = users.getRoles().getRole();
             String token = jwtTokenProvider.createToken(users.getEmail(), role);
 
-            // set token in cookies
             Cookie cookie = cookiesUtil.setTokenInCookies(token);
             httpResponse.addCookie(cookie);
 
-            // body response
+            UserDTO responseUser = new UserDTO(users.getId()
+                    , users.getName()
+                    , users.getEmail()
+                    , null
+                    , role);
+
             Map<String, Object> response = new HashMap<>();
-            UserDTO responseUser = new UserDTO(users.getId(), users.getName(), users.getEmail(), null, role);
+
+
             response.put("user", responseUser);
             response.put("message", "Login successful");
             return ResponseEntity.ok(response);

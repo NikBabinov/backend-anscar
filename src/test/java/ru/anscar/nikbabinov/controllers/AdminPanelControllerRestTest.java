@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import ru.anscar.nikbabinov.config.JwtTokenProviderTestConfig;
 import ru.anscar.nikbabinov.config.TestSecurityConfig;
 import ru.anscar.nikbabinov.entities.Users;
-import ru.anscar.nikbabinov.security.JwtTokenProvider;
 import ru.anscar.nikbabinov.services.AdminService;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class AdminPanelControllerRestTest {
     void getAllUsers_whenAccessAdmin_thenReturn200() throws Exception {
         List<Users> usersList = new ArrayList<>();
         usersList.add(new Users("admin", "admin@mail.ru", "admin"));
-        when(adminService.getAllUsers()).thenReturn(usersList);
+        when(adminService.getAllUsersDto()).thenReturn(usersList);
         mockMvc.perform(get("/user/adminPanel")).andExpect(status().isOk());
     }
 
@@ -54,7 +53,7 @@ public class AdminPanelControllerRestTest {
     void getAllUsers_whenAccessUser_thenReturn403() throws Exception {
         List<Users> usersList = new ArrayList<>();
         usersList.add(new Users("user", "user@mail.ru", "user"));
-        when(adminService.getAllUsers()).thenReturn(usersList);
+        when(adminService.getAllUsersDto()).thenReturn(usersList);
         mockMvc.perform(get("/user/adminPanel")).andExpect(status().isForbidden());
     }
 
@@ -64,7 +63,7 @@ public class AdminPanelControllerRestTest {
         List<Users> usersList = new ArrayList<>();
         usersList.add(new Users("admin", "admin@mail.ru", "admin"));
 
-        when(adminService.getAllUsers()).thenReturn(usersList);
+        when(adminService.getAllUsersDto()).thenReturn(usersList);
 
         String userListAsString = objectMapper.writeValueAsString(usersList);
 

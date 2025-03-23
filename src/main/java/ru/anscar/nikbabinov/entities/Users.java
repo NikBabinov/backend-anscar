@@ -27,6 +27,7 @@ public class Users {
     private Date userUpdateDate;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "roles_id")
     private Roles roles;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

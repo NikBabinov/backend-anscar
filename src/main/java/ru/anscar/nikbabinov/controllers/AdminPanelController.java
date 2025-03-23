@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.anscar.nikbabinov.entities.Users;
+import ru.anscar.nikbabinov.dto.UserStatisticaDTO;
 import ru.anscar.nikbabinov.services.AdminService;
 
 import java.util.List;
@@ -24,11 +24,13 @@ public class AdminPanelController {
 
     @GetMapping
     @PreAuthorize(value = "hasAnyAuthority('ROLE_ADMIN')")
-    public ResponseEntity<List<Users>> getAllUsers() {
-        List<Users> usersList = adminService.getAllUsers();
-        if (usersList.isEmpty()) {
+    public ResponseEntity<List<UserStatisticaDTO>> getAllUsers() {
+
+        List<UserStatisticaDTO> userDtoList = adminService.getAllUsersDto();
+        if (userDtoList.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(usersList);
+        return ResponseEntity.ok(userDtoList);
+
     }
 }

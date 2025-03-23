@@ -30,7 +30,9 @@ public class AuthService implements UserDetailsService {
 
     public Users loginUser(UserDTO userDTO) {
         Users users = usersRepositories.findUsersByEmail(userDTO.getEmail());
-        if (users != null && passwordEncoder.matches(userDTO.getPassword(), users.getPassword())) {
+        System.out.println("users.getPassword(): " + users.getPassword());
+        System.out.println("usersDto.getPassword(): " + userDTO.getPassword());
+        if (passwordEncoder.matches(userDTO.getPassword(), users.getPassword())) {
             logger.info("User logged in successfully: {}", userDTO.getEmail());
             return users;
         } else {
