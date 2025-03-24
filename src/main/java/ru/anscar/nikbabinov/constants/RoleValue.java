@@ -1,5 +1,8 @@
 package ru.anscar.nikbabinov.constants;
 
+import lombok.Getter;
+
+@Getter
 public enum RoleValue {
 
     ROLE_USER("ROLE_USER"),
@@ -7,12 +10,8 @@ public enum RoleValue {
 
     private final String value;
 
-    private RoleValue(String value) {
+    RoleValue(String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 
     @Override

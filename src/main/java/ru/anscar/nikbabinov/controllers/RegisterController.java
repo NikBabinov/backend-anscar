@@ -34,7 +34,6 @@ public class RegisterController {
             }
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } catch (Exception e) {
-            e.printStackTrace();
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(errorResponse);

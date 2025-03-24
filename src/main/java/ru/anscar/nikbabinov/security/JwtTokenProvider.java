@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
-import ru.anscar.nikbabinov.constants.RoleValue;
 import ru.anscar.nikbabinov.util.CookiesUtil;
 
 import java.util.Base64;
