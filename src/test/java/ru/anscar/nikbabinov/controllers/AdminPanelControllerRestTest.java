@@ -42,7 +42,7 @@ public class AdminPanelControllerRestTest {
 
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
-    void getAllUsers_whenAccessAdmin_thenReturn200() throws Exception {
+    void getAllUsers_Statistica_whenAccessAdmin_thenReturn200() throws Exception {
         List<UserStatisticaDTO> usersListStatisticaDto = new ArrayList<>();
 
         UserStatisticaDTO userStatisticaDTO = getUserStatisticaDTO();
@@ -54,7 +54,7 @@ public class AdminPanelControllerRestTest {
 
     @Test
     @WithMockUser(authorities = "ROLE_USER")
-    void getAllUsers_whenAccessUser_thenReturn403() throws Exception {
+    void getAllUsers_Statistica_whenAccessUser_thenReturn403() throws Exception {
         List<UserStatisticaDTO> usersListStatisticaDto = new ArrayList<>();
 
         UserStatisticaDTO userStatisticaDTO = getUserStatisticaDTO();

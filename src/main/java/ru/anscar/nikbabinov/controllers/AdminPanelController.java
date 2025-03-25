@@ -24,7 +24,7 @@ public class AdminPanelController {
 
     @GetMapping
     @PreAuthorize(value = "hasAnyAuthority('ROLE_ADMIN')")
-    public ResponseEntity<List<UserStatisticaDTO>> getAllUsers() {
+    public ResponseEntity<List<UserStatisticaDTO>> getAllUsersStatistica() {
 
         List<UserStatisticaDTO> userDtoList = adminService.getAllUsersDto();
         if (userDtoList.isEmpty()) {
