@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user/adminPanel")
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AdminPanelController {
 
     private final AdminService adminService;
@@ -23,7 +24,6 @@ public class AdminPanelController {
     }
 
     @GetMapping
-    @PreAuthorize(value = "hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<UserStatisticaDTO>> getAllUsersStatistica() {
 
         List<UserStatisticaDTO> userDtoList = adminService.getAllUsersDto();
