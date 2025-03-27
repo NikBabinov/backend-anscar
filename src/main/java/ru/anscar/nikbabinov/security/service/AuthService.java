@@ -1,4 +1,4 @@
-package ru.anscar.nikbabinov.services;
+package ru.anscar.nikbabinov.security.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import ru.anscar.nikbabinov.dto.UserDTO;
 import ru.anscar.nikbabinov.entities.Users;
 import ru.anscar.nikbabinov.repositories.UsersRepositories;
-import ru.anscar.nikbabinov.security.UserSecurity;
+import ru.anscar.nikbabinov.security.entity.UserSecurity;
 
 @Service
 public class AuthService implements UserDetailsService {

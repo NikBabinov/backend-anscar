@@ -1,4 +1,4 @@
-package ru.anscar.nikbabinov.security;
+package ru.anscar.nikbabinov.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +13,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import ru.anscar.nikbabinov.security.custom_handler.CustomLogoutSuccessHandler;
+import ru.anscar.nikbabinov.security.jwt.JwtAuthenticationFilter;
 
 import java.util.List;
 

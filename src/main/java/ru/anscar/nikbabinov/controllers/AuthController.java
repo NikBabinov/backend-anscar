@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.anscar.nikbabinov.dto.UserDTO;
 import ru.anscar.nikbabinov.entities.Users;
-import ru.anscar.nikbabinov.services.AuthService;
+import ru.anscar.nikbabinov.security.service.AuthService;
 import ru.anscar.nikbabinov.util.ResponseEntityUtil;
 
 import java.util.Map;

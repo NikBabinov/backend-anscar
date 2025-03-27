@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import ru.anscar.nikbabinov.dto.UserDTO;
 import ru.anscar.nikbabinov.entities.Users;
-import ru.anscar.nikbabinov.security.JwtTokenProvider;
+import ru.anscar.nikbabinov.security.jwt.JwtTokenProvider;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;

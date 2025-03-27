@@ -1,4 +1,4 @@
-package ru.anscar.nikbabinov.security;
+package ru.anscar.nikbabinov.security.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,8 +23,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
-
         String token = jwtTokenProvider.resolveToken(request);
         if (token != null && jwtTokenProvider.validateToken(token)) {
             Authentication auth = jwtTokenProvider.getAuthentication(token);

@@ -1,4 +1,4 @@
-package ru.anscar.nikbabinov.security;
+package ru.anscar.nikbabinov.security.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,4 +1,4 @@
-package ru.anscar.nikbabinov.security;
+package ru.anscar.nikbabinov.security.custom_handler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

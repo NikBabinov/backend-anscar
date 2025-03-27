@@ -1,4 +1,4 @@
-package ru.anscar.nikbabinov.security;
+package ru.anscar.nikbabinov.security.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -37,13 +37,13 @@ public class JwtTokenProvider {
         secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
     }
 
-    public String createToken(String username, String role) {
+    public String createToken(String userEmail, String role) {
         Date now = new Date();
         long validityInMilliseconds = 3600000; // 1 hour
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(userEmail)
                 .claim("roles", role)
                 .setIssuedAt(now)
                 .setExpiration(validity)
@@ -52,11 +52,11 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getUsername(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(getUserByEmail(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String getUsername(String token) {
+    public String getUserByEmail(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
